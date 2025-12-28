@@ -1,8 +1,10 @@
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
 import { createGuest, getGuest } from "./data-service";
+import { authConfig } from "@/auth.config";
 
-const authConfig = {
+const config = {
+  ...authConfig,
   providers: [
     Google({
       clientId: process.env.AUTH_GOOGLE_ID,
@@ -10,9 +12,7 @@ const authConfig = {
     }),
   ],
   callbacks: {
-    authorized({ auth, request }) {
-      return !!auth?.user;
-    },
+    ...authConfig.callbacks,
     async signIn({ user, account, profile }) {
       try {
         const existingGuest = await getGuest(user.email);
@@ -31,9 +31,6 @@ const authConfig = {
       return session;
     },
   },
-  pages: {
-    signIn: "/login",
-  },
 };
 
 export const {
@@ -41,4 +38,4 @@ export const {
   signIn,
   signOut,
   handlers: { GET, POST },
-} = NextAuth(authConfig);
+} = NextAuth(config);

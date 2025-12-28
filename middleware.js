@@ -1,14 +1,8 @@
-/*import { NextResponse } from "next/server";
+import NextAuth from "next-auth";
+import { authConfig } from "./auth.config";
 
-export function middleware(request) {
-  console.log(request);
-
-  return NextResponse.redirect(new URL("/about", request.url));
-}*/
-
-import { auth } from "@/app/_lib/auth";
-export const middleware = auth;
+export const { auth: middleware } = NextAuth(authConfig);
 
 export const config = {
-  matcher: ["/account"],
+  matcher: ["/account/:path*"],
 };
