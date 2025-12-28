@@ -1,9 +1,11 @@
 import NextAuth from "next-auth";
 import { authConfig } from "./auth.config";
 
-export const { auth: middleware } = NextAuth(authConfig);
+const { auth } = NextAuth(authConfig);
 
-// Only run middleware on account routes
+export default auth;
+
+// Only run proxy on account routes
 export const config = {
   matcher: ["/account/:path*"],
 };

@@ -10,9 +10,8 @@ const nextConfig = {
       },
     ],
   },
-  experimental: {
-    serverComponentsExternalPackages: ["@auth/core"],
-  },
+  serverExternalPackages: ["@auth/core"],
+  turbopack: {},
   // output: "export",
 };
 
