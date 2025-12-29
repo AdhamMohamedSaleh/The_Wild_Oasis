@@ -26,8 +26,14 @@ const config = {
       }
     },
     async session({ session, user }) {
-      const guest = await getGuest(session.user.email);
-      session.user.guestId = guest.id;
+      try {
+        const guest = await getGuest(session.user.email);
+        if (guest) {
+          session.user.guestId = guest.id;
+        }
+      } catch (error) {
+        console.error("Error fetching guest:", error);
+      }
       return session;
     },
   },
