@@ -136,7 +136,13 @@ export async function getSettings() {
 
   if (error) {
     console.error(error);
-    throw new Error("Settings could not be loaded");
+    // Return default settings if table doesn't exist
+    return {
+      minBookingLength: 3,
+      maxBookingLength: 90,
+      maxGuestsPerBooking: 10,
+      breakfastPrice: 15,
+    };
   }
 
   return data;
