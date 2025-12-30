@@ -3,21 +3,21 @@ import { updateBooking } from "@/app/_lib/actions";
 import { getBooking, getCabin } from "@/app/_lib/data-service";
 
 export default async function Page({ params }) {
-  const { bookingId } = await params;
-  const { numGuests, observations, cabinId } = await getBooking(bookingId);
+  const resolvedParams = await params;
+  const { numGuests, observations, cabinId } = await getBooking(resolvedParams.bookingId);
   const { maxCapacity } = await getCabin(cabinId);
 
   return (
     <div>
       <h2 className="font-semibold text-2xl text-accent-400 mb-7">
-        Edit Reservation #{bookingId}
+        Edit Reservation #{resolvedParams.bookingId}
       </h2>
 
       <form
         action={updateBooking}
         className="bg-primary-900 py-8 px-12 text-lg flex gap-6 flex-col"
       >
-        <input type="hidden" value={bookingId} name="bookingId" />
+        <input type="hidden" value={resolvedParams.bookingId} name="bookingId" />
 
         <div className="space-y-2">
           <label htmlFor="numGuests">How many guests?</label>
